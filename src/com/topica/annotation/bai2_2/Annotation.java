@@ -39,8 +39,6 @@ public class Annotation {
 		String value = "";
 		for (Field fd : field) {
 			column = column + fd.getName() + ",";
-		}
-		for (Field fd : field) {
 			value = value + fd.get(obj) + ",";
 		}
 		column = column.substring(0, column.length() - 1);
