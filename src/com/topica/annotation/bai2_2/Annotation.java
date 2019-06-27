@@ -33,7 +33,7 @@ public class Annotation {
 		select(field, nameTable);
 	}
 
-	public static void insert_1(Field[] field, Object obj, String nameTable)
+	public static void insert(Field[] field, Object obj, String nameTable)
 			throws IllegalArgumentException, IllegalAccessException {
 		String column = "";
 		String value = "";
