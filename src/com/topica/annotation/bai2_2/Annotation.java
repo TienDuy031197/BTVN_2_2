@@ -39,7 +39,11 @@ public class Annotation {
 		String value = "";
 		for (Field fd : field) {
 			column = column + fd.getName() + ",";
-			value = value + fd.get(obj) + ",";
+			if(fd.get(obj) instanceof String) {
+				value = value +"'"+ fd.get(obj) +"'"+ ",";
+			}else {
+				value = value + fd.get(obj) + ",";
+			}
 		}
 		column = column.substring(0, column.length() - 1);
 		value = value.substring(0, value.length() - 1);
