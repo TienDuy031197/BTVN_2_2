@@ -49,9 +49,9 @@ public class Annotation {
 	public static void select(Field[] field, String nameTable) {
 		String column = "";
 		for (Field fd : field) {
-			column = column + fd.getName() + " ,";
+			column = column + fd.getName() + ",";
 		}
-		column = column.substring(0, column.length() - 1);
+		column = column.substring(0, column.length() - 1) + " ";
 		System.out.println("SELECT " + column + "FROM " + nameTable);
 	}
 
