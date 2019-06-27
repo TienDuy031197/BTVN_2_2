@@ -18,18 +18,16 @@ import java.lang.reflect.Field;
 
 public class Annotation {
 	public static void dataDB(Object obj) throws IllegalArgumentException, IllegalAccessException {
-		Class<?> clas = obj.getClass();
-		// String nametable = clas.getSimpleName();
-		String nameTable = clas.getAnnotation(dataDB.class).name();
-		Field[] field = clas.getDeclaredFields();
+		Class<?> nameClass = obj.getClass();
+		String nameTable = nameClass.getAnnotation(dataDB.class).name();
+		Field[] field = nameClass.getDeclaredFields();
 		for (Field fd : field) {
 			dataDB data = fd.getAnnotation(dataDB.class);
 			if (data != null) {
 				fd.setAccessible(true);
 			}
 		}
-
-		insert_1(field, obj, nameTable);
+		insert(field, obj, nameTable);
 		select(field, nameTable);
 	}
 
@@ -37,26 +35,31 @@ public class Annotation {
 			throws IllegalArgumentException, IllegalAccessException {
 		String column = "";
 		String value = "";
+		StringBuilder builder = new StringBuilder();
 		for (Field fd : field) {
 			column = column + fd.getName() + ",";
-			if(fd.get(obj) instanceof String) {
-				value = value +"'"+ fd.get(obj) +"'"+ ",";
-			}else {
+			if (fd.get(obj) instanceof String) {
+				value = value + "'" + fd.get(obj) + "'" + ",";
+			} else {
 				value = value + fd.get(obj) + ",";
 			}
 		}
 		column = column.substring(0, column.length() - 1);
 		value = value.substring(0, value.length() - 1);
-		System.out.println("INSERT INTO " + nameTable + " (" + column + ") VALUES (" + value + ");");
+		builder.append("INSERT INTO ").append(nameTable).append(" (").append(column).append(") VALUES (").append(value)
+				.append(")").toString();
+		System.out.println(builder);
 	}
 
 	public static void select(Field[] field, String nameTable) {
 		String column = "";
+		StringBuilder builder = new StringBuilder();
 		for (Field fd : field) {
 			column = column + fd.getName() + ",";
 		}
 		column = column.substring(0, column.length() - 1) + " ";
-		System.out.println("SELECT " + column + "FROM " + nameTable);
+		builder.append("SELECT ").append(column).append("FROM ").append(nameTable).toString();
+		System.out.println(builder);
 	}
 
 }
